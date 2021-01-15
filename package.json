@@ -1,0 +1,27 @@
+{
+  "name": "discordbot-hazzikostas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/app.ts",
+    "build": "tsc -p .",
+    "prod": "node dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianvillanueva997/discordbot-hazzikostas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianvillanueva997/discordbot-hazzikostas/issues"
+  },
+  "homepage": "https://github.com/adrianvillanueva997/discordbot-hazzikostas#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3"
+  }
+}
