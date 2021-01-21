@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/app.ts",
+    "dev": "ts-node-dev src/app.ts",
     "build": "tsc -p .",
     "prod": "node dist/app.js"
   },
@@ -13,19 +13,20 @@
     "url": "git+https://github.com/adrianvillanueva997/discordbot-hazzikostas.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Adrián Villanueva Martínez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/adrianvillanueva997/discordbot-hazzikostas/issues"
   },
   "homepage": "https://github.com/adrianvillanueva997/discordbot-hazzikostas#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0",
-    "ts-node-dev": "^1.1.1",
-    "typescript": "^4.1.3"
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3",
     "@types/node": "^14.14.21"
   }
 }
