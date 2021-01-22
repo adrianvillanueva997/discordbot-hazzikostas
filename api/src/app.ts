@@ -10,6 +10,7 @@ import { unset } from "./routes/unsetCharacters";
 import { set } from "./routes/setCharacters";
 import { setAffixes } from "./routes/setAffix";
 import { unSetAffixes } from "./routes/unsetAffix";
+import { affixes } from "./routes/getAffixes";
 
 require("dotenv").config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(unset);
 app.use(set);
 app.use(setAffixes);
 app.use(unSetAffixes);
+app.use(affixes);
 
 const start = async () => {
   try {

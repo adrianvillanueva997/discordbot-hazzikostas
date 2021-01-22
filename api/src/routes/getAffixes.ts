@@ -5,7 +5,7 @@ import { raider } from "../services/raider";
 const router = express.Router();
 
 router.get(
-  "/api/getaffixes",
+  "/api/affixes",
   body("region").isString(),
   body("locale").isString(),
   async (req: Request, res: Response) => {
@@ -18,3 +18,5 @@ router.get(
     res.status(200).json(affixesData);
   }
 );
+
+export {router as affixes}
