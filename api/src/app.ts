@@ -12,6 +12,7 @@ import { setAffixes } from "./routes/setAffix";
 import { unSetAffixes } from "./routes/unsetAffix";
 import { affixes } from "./routes/getAffixes";
 import { AffixesJob } from "./routines/affixesRoutine";
+import { raider } from "./services/raider";
 
 require("dotenv").config();
 const app = express();
@@ -41,9 +42,10 @@ const start = async () => {
   } catch (err) {
     console.log(err);
   }
-  app.listen(3000, () => {
+  app.listen(3000, async () => {
     console.log("API listening on port 3000");
     AffixesJob.start();
+    await raider.getCharacterData("us", "wyrmrest-accord", "Uwupolicia");
   });
 };
 start().then();
