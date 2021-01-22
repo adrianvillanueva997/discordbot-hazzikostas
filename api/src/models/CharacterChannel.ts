@@ -27,11 +27,11 @@ const setSchema = new mongoose.Schema(
 );
 
 setSchema.statics.build = (attrs: setAttrs) => {
-  return new setCharacterChannel(attrs);
+  return new characterChannel(attrs);
 };
-const setCharacterChannel = mongoose.model<setDoc, setModel>(
+const characterChannel = mongoose.model<setDoc, setModel>(
   "SetCharacters",
   setSchema
 );
 
-export { setCharacterChannel };
+export { characterChannel };

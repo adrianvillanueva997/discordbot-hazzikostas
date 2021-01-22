@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { Character } from "../models/character";
+import { Character } from "../models/Character";
 
 const router = express.Router();
 

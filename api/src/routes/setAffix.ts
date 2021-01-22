@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { setAffixChannel } from "../models/setAffixChannel";
+import { affixChannel } from "../models/AffixChannel";
 
 const router = express.Router();
 
@@ -21,12 +21,12 @@ router.post(
         message: "Region not valid, it must be: us, eu, tw, kr or cn",
       });
     }
-    const affix = setAffixChannel.build({
+    const affix = affixChannel.build({
       channelID: channelID,
       region: region,
       serverID: guildID,
     });
-    const exists = await setAffixChannel.findOne({ serverID: guildID });
+    const exists = await affixChannel.findOne({ serverID: guildID });
     if (exists == null) {
       await affix.save();
       return res
@@ -42,7 +42,7 @@ router.post(
     }
     if (!exists.region.includes(region)) {
       exists.region.push(region);
-      await setAffixChannel.findByIdAndUpdate(
+      await affixChannel.findByIdAndUpdate(
         { _id: exists._id },
         { region: exists.region },
         { useFindAndModify: false }

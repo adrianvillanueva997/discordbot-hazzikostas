@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
-import { setCharacterChannel } from "../models/setCharacterChannel";
+import { characterChannel } from "../models/CharacterChannel";
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.delete(
       return res.status(400).json({ errors: errors.array() });
     }
     const { guildID, channelID } = req.body;
-    const exists = await setCharacterChannel.findOne({
+    const exists = await characterChannel.findOne({
       serverID: guildID,
       channelID: channelID,
     });
@@ -23,7 +23,7 @@ router.delete(
       res.status(400).json({ message: "Server does not exist" });
       return;
     }
-    await setCharacterChannel.findOneAndRemove(
+    await characterChannel.findOneAndRemove(
       {
         serverID: guildID,
         channelID: channelID,

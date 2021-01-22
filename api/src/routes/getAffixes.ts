@@ -15,8 +15,8 @@ router.get(
     }
     const { region, locale } = req.body;
     const affixesData = await raider.getAffixes(region, locale);
-    res.status(200).json(affixesData);
+    res.status(200).json({ message: affixesData });
   }
 );
 
-export {router as affixes}
+export { router as affixes };

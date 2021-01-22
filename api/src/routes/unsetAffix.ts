@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { setAffixChannel } from "../models/setAffixChannel";
+import { affixChannel } from "../models/AffixChannel";
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.delete(
         message: "Region not valid, it must be: us, eu, tw, kr or cn.",
       });
     }
-    const exists = await setAffixChannel.findOne({
+    const exists = await affixChannel.findOne({
       serverID: guildID,
       channelID: channelID,
     });
@@ -31,7 +31,7 @@ router.delete(
         .json({ message: "This server does not have any affix channel set." });
     }
     if (exists.region.length == 1) {
-      await setAffixChannel.findByIdAndDelete(
+      await affixChannel.findByIdAndDelete(
         { _id: exists._id },
         { useFindAndModify: false }
       );
@@ -45,7 +45,7 @@ router.delete(
       ) {
         return value != region;
       });
-      await setAffixChannel.findByIdAndUpdate(
+      await affixChannel.findByIdAndUpdate(
         { _id: exists._id },
         { region: newRegionArr },
         { useFindAndModify: false }

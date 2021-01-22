@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
-import { setCharacterChannel } from "../models/setCharacterChannel";
+import { characterChannel } from "../models/CharacterChannel";
 
 const router = express.Router();
 
@@ -15,11 +15,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     const { guildID, channelID } = req.body;
-    const setChannel = setCharacterChannel.build({
+    const setChannel = characterChannel.build({
       serverID: guildID,
       channelID: channelID,
     });
-    const exists = await setCharacterChannel.findOne({
+    const exists = await characterChannel.findOne({
       guildID: guildID,
       channelID: channelID,
     });
