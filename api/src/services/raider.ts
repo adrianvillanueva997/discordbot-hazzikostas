@@ -5,7 +5,7 @@ export class raider {
   constructor() {}
 
   static async getAffixes(region: string, locale: string): Promise<Affixes> {
-    const { affixRegion, title, details } = await axios
+    const { title, affix_details } = await axios
       .get(
         `https://raider.io/api/v1/mythic-plus/affixes?region=${region}&locale=${locale}`,
         {
@@ -17,7 +17,7 @@ export class raider {
       .then((r) => {
         return r.data;
       });
-    return { region: affixRegion, title: title, details: details } as Affixes;
+    return { region: region, title: title, details: affix_details } as Affixes;
   }
 
   async getCharacterData() {}
