@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { raider } from "../services/raider";
+import { affixes } from "../models/Affixes";
 
 const router = express.Router();
 
@@ -13,9 +13,9 @@ router.get(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { region, locale } = req.body;
-    const affixesData = await raider.getAffixes(region, locale);
-    res.status(200).json({ message: affixesData });
+    const { region } = req.body;
+    const affix = affixes.findOne({ region: region });
+    return res.status(200).json({ message: affix });
   }
 );
 
