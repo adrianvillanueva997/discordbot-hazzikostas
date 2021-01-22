@@ -1,10 +1,5 @@
 import axios from "axios";
-
-export interface Affixes {
-  region: string;
-  title: string;
-  details: string[];
-}
+import { Affixes } from "../models/Affixes";
 
 export class raider {
   constructor() {}
