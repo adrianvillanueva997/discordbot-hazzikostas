@@ -45,6 +45,7 @@ export interface CharacterDoc extends mongoose.Document {
   rankOverallDif: number;
   rankClassDif: number;
   rankFactionDif: number;
+  postStatus: number;
 }
 
 const characterSchema = new mongoose.Schema(
@@ -166,6 +167,10 @@ const characterSchema = new mongoose.Schema(
       required: false,
     },
     rankFactionDif: {
+      type: Number,
+      required: false,
+    },
+    postStatus: {
       type: Number,
       required: false,
     },

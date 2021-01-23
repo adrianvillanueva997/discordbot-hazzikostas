@@ -34,8 +34,6 @@ export class raider {
       .then((r) => {
         return r.data;
       });
-    console.log(data);
-    console.log(data.mythic_plus_scores_by_season[0]);
     return {
       toonName: data.name,
       race: data.race,
