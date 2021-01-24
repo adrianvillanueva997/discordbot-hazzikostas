@@ -2,7 +2,7 @@ import axios from "axios";
 import { Affixes } from "../models/Affixes";
 import { CharacterDoc } from "../models/Character";
 
-export class raider {
+class Raider {
   constructor() {}
 
   static async getAffixes(region: string, locale: string): Promise<Affixes> {
@@ -58,3 +58,5 @@ export class raider {
     } as CharacterDoc;
   }
 }
+
+export { Raider };

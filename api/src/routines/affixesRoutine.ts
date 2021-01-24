@@ -1,5 +1,5 @@
 import { CronJob } from "cron";
-import { raider } from "../services/raider";
+import { Raider } from "../services/raider";
 import { affixes } from "../models/Affixes";
 
 const job = new CronJob("55 18 * * 2", async () => {
@@ -7,7 +7,7 @@ const job = new CronJob("55 18 * * 2", async () => {
   const regions = ["us", "eu", "tw", "kr", "cn"];
   for (let i = 0; i < regions.length; i++) {
     const region = regions[i];
-    const affixesData = await raider.getAffixes(region, "en");
+    const affixesData = await Raider.getAffixes(region, "en");
     const exists = await affixes.findOne({
       region: region,
       title: affixesData.title,
