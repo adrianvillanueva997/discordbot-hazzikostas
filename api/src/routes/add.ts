@@ -14,7 +14,8 @@ router.post(
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      console.error(errors.array());
+      return res.send({ errors: errors.array() }).status(400);
     }
     const { toonName, realm, region, serverID } = req.body;
     const character = Character.build({
@@ -30,13 +31,11 @@ router.post(
     });
     if (characterExists === null) {
       await character.save();
-      res.sendStatus(200);
-      return;
+      return res.send({ message: "Character added successfully" }).status(200);
     }
     const serverIDs = characterExists.serverID;
     if (serverIDs.includes(serverID)) {
-      res.status(400).json({ message: "Character already exists" });
-      return;
+      return res.send({ message: "Character already registered" }).status(400);
     }
     characterExists.serverID.push(serverID);
     console.log(characterExists.serverID);
@@ -45,7 +44,7 @@ router.post(
       { serverID: characterExists.serverID },
       { useFindAndModify: false }
     );
-    res.sendStatus(200);
+    return res.send({ message: "Character added successfully" }).status(200);
   }
 );
 

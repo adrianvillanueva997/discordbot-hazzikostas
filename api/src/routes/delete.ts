@@ -6,13 +6,13 @@ import { Character } from "../models/Character";
 const router = express.Router();
 
 router.delete(
-  "/api/characters/delete",
+  "/api/characters/delete/",
   body("toonName").isString(),
   body("realm").isString(),
   body("region").isString(),
-  body("serverID").isNumeric(),
+  body("serverID").isString(),
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req.body);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -21,25 +21,20 @@ router.delete(
       toonName: toonName,
       realm: realm,
       region: region,
-      serverID: serverID,
     });
     if (data === null) {
-      res.status(400).json({ message: "Character does not exist" });
-      return;
+      return res.send({ message: "Character does not exist" }).status(404);
     }
     if (data.serverID.length == 1) {
       await Character.findByIdAndDelete(
         { _id: data._id },
         { useFindAndModify: false }
       );
-      res.status(200).json({ message: "Ok" });
-      return;
+      return res
+        .send({ message: "Character deleted successfully" })
+        .status(200);
     }
-    const newServerIDArr = data.serverID.filter(function (
-      value: number,
-      index: number,
-      arr: any
-    ) {
+    const newServerIDArr = data.serverID.filter(function (value: string) {
       return value != serverID;
     });
     console.log(data.serverID);
@@ -49,7 +44,7 @@ router.delete(
       { serverID: newServerIDArr },
       { useFindAndModify: false }
     );
-    res.status(200).json({ message: "Ok" });
+    return res.send({ message: "Character deleted successfully" }).status(200);
   }
 );
 
