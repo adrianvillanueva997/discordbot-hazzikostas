@@ -3,6 +3,7 @@ import Discord from "discord.js";
 import { help } from "./commands/help";
 import { addCharacter } from "./commands/add";
 import { argsChecker } from "./middleware/argsChecker";
+import { deleteCharacter } from "./commands/delete";
 
 require("dotenv").config();
 const client = new Discord.Client();
@@ -26,6 +27,7 @@ client.on("message", async (message: any) => {
   const command = args.shift().toLowerCase();
   const guildID = message.guild.id;
   const channelID = message.channel.id;
+  let check = undefined;
   switch (command) {
     case "commands":
       message.channel.send(help());
@@ -41,22 +43,32 @@ client.on("message", async (message: any) => {
     case "show":
       break;
     case "add":
-      const check = argsChecker(3, args.length);
+      check = argsChecker(3, args.length);
       if (check === undefined) {
-        console.log(args);
         const result = await addCharacter({
-          toonName: args[0],
-          realm: args[1],
-          region: args[2],
+          toonName: args[0].toLowerCase(),
+          realm: args[1].toLowerCase(),
+          region: args[2].toLowerCase(),
           serverID: guildID,
         });
-        console.log(result);
-        message.channel.send(result);
+        await message.channel.send(result);
       } else {
-        message.channel.send(check);
+        await message.channel.send(check);
       }
       break;
     case "delete":
+      check = argsChecker(3, args.length);
+      if (check === undefined) {
+        const result = await deleteCharacter({
+          toonName: args[0].toLowerCase(),
+          realm: args[1].toLowerCase(),
+          region: args[2].toLowerCase(),
+          serverID: guildID,
+        });
+        await message.channel.send(result);
+      } else {
+        await message.channel.send(check);
+      }
       break;
     case "stats":
       break;

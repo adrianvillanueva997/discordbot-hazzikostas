@@ -1,24 +1,19 @@
-import axios, { AxiosPromise } from "axios";
+import axios from "axios";
+import { Character } from "../models/Character";
 
-interface Character {
-  toonName: string;
-  region: string;
-  realm: string;
-  serverID: number;
-}
-
-const addCharacter = async (character: Character): Promise<AxiosPromise> => {
+const addCharacter = async (character: Character): Promise<string> => {
   return await axios
     .post(`http://${process.env.discord_bot_api_url}/api/characters/add`, {
-
       toonName: character.toonName,
       region: character.region,
       realm: character.realm,
       serverID: character.serverID,
     })
     .then((r) => {
-        console.log(r.data)
-      return r.data;
+      return r.data.message;
+    })
+    .catch((r) => {
+      return r;
     });
 };
 
