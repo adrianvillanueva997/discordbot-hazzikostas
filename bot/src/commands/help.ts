@@ -12,7 +12,7 @@ export const help = (): MessageEmbed => {
   );
   message.addField(
     "Add",
-    "Adds a new character to be tracked. (name, region, realm)",
+    "Adds a new character to be tracked. (name, realm, region)",
     false
   );
   message.addField("Delete", "Deletes a tracked character.", false);
