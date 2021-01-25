@@ -12,7 +12,7 @@ router.post(
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.send({ errors: errors.array() }).status(400);
     }
     const { guildID, channelID } = req.body;
     const setChannel = characterChannel.build({
@@ -25,10 +25,9 @@ router.post(
     });
     if (exists === null) {
       await setChannel.save();
-      res.sendStatus(200);
-      return;
+      return res.send({ message: "Channel assigned successfully" }).status(200);
     }
-    res.send("Server does not exist").status(400);
+    return res.send({ message: "Server does not exist" }).status(400);
   }
 );
 

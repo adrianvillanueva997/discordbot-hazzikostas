@@ -12,14 +12,16 @@ router.post(
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.send({ errors: errors.array() }).status(400);
     }
     let { guildID, channelID, region } = req.body;
     region = region.lowercase;
     if (region != "us" || "eu" || "tw" || "kr" || "cn") {
-      return res.status(400).json({
-        message: "Region not valid, it must be: us, eu, tw, kr or cn",
-      });
+      return res
+        .send({
+          message: "Region not valid, it must be: us, eu, tw, kr or cn",
+        })
+        .status(404);
     }
     const affix = affixChannel.build({
       channelID: channelID,
@@ -30,15 +32,17 @@ router.post(
     if (exists == null) {
       await affix.save();
       return res
-        .status(200)
-        .json({ message: "Channel and region added successfully" });
+        .send({ message: "Channel and region added successfully" })
+        .status(200);
     }
     if (exists.channelID != channelID) {
-      return res.status(400).json({
-        message:
-          "Affixes channel already set. Unset the previous channel first. To add another region, " +
-          "you have to do it in the channel where you set the affixes update.",
-      });
+      return res
+        .send({
+          message:
+            "Affixes channel already set. Unset the previous channel first. To add another region, " +
+            "you have to do it in the channel where you set the affixes update.",
+        })
+        .status(400);
     }
     if (!exists.region.includes(region)) {
       exists.region.push(region);
@@ -47,11 +51,13 @@ router.post(
         { region: exists.region },
         { useFindAndModify: false }
       );
-      return res.status(200).json({ message: "Region added successfully" });
+      return res.send({ message: "Region added successfully" }).status(200);
     } else {
-      return res.status(400).json({
-        message: "Region already registered.",
-      });
+      return res
+        .send({
+          message: "Region already registered.",
+        })
+        .status(400);
     }
   }
 );

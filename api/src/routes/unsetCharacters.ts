@@ -12,7 +12,7 @@ router.delete(
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.send({ errors: errors.array() }).status(400);
     }
     const { guildID, channelID } = req.body;
     const exists = await characterChannel.findOne({
@@ -20,8 +20,7 @@ router.delete(
       channelID: channelID,
     });
     if (exists == null) {
-      res.status(400).json({ message: "Server does not exist" });
-      return;
+      return res.send({ message: "Server does not exist" }).status(404);
     }
     await characterChannel.findOneAndRemove(
       {
@@ -30,7 +29,7 @@ router.delete(
       },
       { useFindAndModify: false }
     );
-    res.sendStatus(200);
+    res.send({ message: "Channel unset successfully" }).status(200);
   }
 );
 

@@ -12,14 +12,16 @@ router.delete(
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.send({ errors: errors.array() }).status(400);
     }
     let { guildID, channelID, region } = req.body;
     region = region.lowercase;
     if (region != "us" || "eu" || "tw" || "kr" || "cn") {
-      return res.status(404).json({
-        message: "Region not valid, it must be: us, eu, tw, kr or cn.",
-      });
+      return res
+        .send({
+          message: "Region not valid, it must be: us, eu, tw, kr or cn.",
+        })
+        .status(400);
     }
     const exists = await affixChannel.findOne({
       serverID: guildID,
@@ -27,22 +29,18 @@ router.delete(
     });
     if (exists == null) {
       return res
-        .status(404)
-        .json({ message: "This server does not have any affix channel set." });
+        .send({ message: "This server does not have any affix channel set." })
+        .status(404);
     }
     if (exists.region.length == 1) {
       await affixChannel.findByIdAndDelete(
         { _id: exists._id },
         { useFindAndModify: false }
       );
-      return res.status(200).json({ message: "Channel unset successfully" });
+      return res.send({ message: "Channel unset successfully" }).status(200);
     }
     if (exists.region.contains(region)) {
-      const newRegionArr = exists.region.filter(function (
-        value: number,
-        index: number,
-        arr: any
-      ) {
+      const newRegionArr = exists.region.filter(function (value: number) {
         return value != region;
       });
       await affixChannel.findByIdAndUpdate(
@@ -50,7 +48,7 @@ router.delete(
         { region: newRegionArr },
         { useFindAndModify: false }
       );
-      return res.status(200).json({ message: "channel unset successfully." });
+      return res.send({ message: "channel unset successfully." }).status(200);
     }
   }
 );

@@ -13,12 +13,12 @@ router.get(
       return res.status(400).json({ errors: errors.array() });
     }
     const { guildID } = req.body;
-    const found = await Character.find({ serverID: guildID });
+    const found = await Character.find({ serverID: [guildID] });
     if (found.length == 0) {
-      res.status(404).json({ message: "No characters registered yet" });
+      res.send({ message: "No characters registered yet" }).status(404);
       return;
     }
-    res.status(200).json({ message: found });
+    res.send({ message: found }).status(200);
     return;
   }
 );

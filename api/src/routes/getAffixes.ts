@@ -11,11 +11,11 @@ router.get(
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.send({ errors: errors.array() }).status(400);
     }
     const { region } = req.body;
     const affix = affixes.findOne({ region: region });
-    return res.status(200).json({ message: affix });
+    return res.send({ message: affix }).status(200);
   }
 );
 
