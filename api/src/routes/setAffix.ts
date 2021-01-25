@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+
 import { affixChannel } from "../models/AffixChannel";
+import { regions } from "../models/Regions";
 
 const router = express.Router();
 
@@ -16,7 +18,6 @@ router.post(
     }
     let { guildID, channelID, region } = req.body;
     region = region.toLowerCase();
-    const regions = ["us", "eu", "tw", "kr", "cn"];
     if (!regions.includes(region)) {
       return res
         .send({

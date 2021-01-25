@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { affixChannel } from "../models/AffixChannel";
+import { regions } from "../models/Regions";
 
 const router = express.Router();
 
@@ -15,13 +16,12 @@ router.delete(
       return res.send({ errors: errors.array() }).status(400);
     }
     let { guildID, channelID, region } = req.body;
-    region = region.lowercase;
-    if (region != "us" || "eu" || "tw" || "kr" || "cn") {
+    if (!regions.includes(region)) {
       return res
         .send({
-          message: "Region not valid, it must be: us, eu, tw, kr or cn.",
+          message: "Region not valid, it must be: us, eu, tw, kr or cn",
         })
-        .status(400);
+        .status(404);
     }
     const exists = await affixChannel.findOne({
       serverID: guildID,
@@ -39,7 +39,7 @@ router.delete(
       );
       return res.send({ message: "Channel unset successfully" }).status(200);
     }
-    if (exists.region.contains(region)) {
+    if (exists.region.includes(region)) {
       const newRegionArr = exists.region.filter(function (value: number) {
         return value != region;
       });

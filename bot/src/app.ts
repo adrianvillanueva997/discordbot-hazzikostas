@@ -6,6 +6,7 @@ import { argsChecker } from "./middleware/argsChecker";
 import { deleteCharacter } from "./commands/delete";
 import { show } from "./commands/show";
 import { setAffix } from "./commands/setAffixes";
+import { unSetAffix } from "./commands/unSetAffixes";
 
 require("dotenv").config();
 const client = new Discord.Client();
@@ -44,10 +45,19 @@ client.on("message", async (message: any) => {
           args[0].toLowerCase()
         );
         console.log(result);
-        message.channel.send(result);
-      } else message.channel.send(check);
+        await message.channel.send(result);
+      } else await message.channel.send(check);
       break;
     case "unsetaffixes":
+      check = argsChecker(1, args.length);
+      if (check === undefined) {
+        const response = await unSetAffix(
+          guildID,
+          channelID,
+          args[0].toLowerCase()
+        );
+        await message.channel.send(response);
+      } else await message.channel.send(check);
       break;
     case "setcharacterupdates":
       break;
