@@ -15,8 +15,9 @@ router.post(
       return res.send({ errors: errors.array() }).status(400);
     }
     let { guildID, channelID, region } = req.body;
-    region = region.lowercase;
-    if (region != "us" || "eu" || "tw" || "kr" || "cn") {
+    region = region.toLowerCase();
+    const regions = ["us", "eu", "tw", "kr", "cn"];
+    if (!regions.includes(region)) {
       return res
         .send({
           message: "Region not valid, it must be: us, eu, tw, kr or cn",

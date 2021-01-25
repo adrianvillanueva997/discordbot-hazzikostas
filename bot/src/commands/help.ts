@@ -18,12 +18,12 @@ export const help = (): MessageEmbed => {
   message.addField("Delete", "Deletes a tracked character.", false);
   message.addField("Show", "Shows the current tracked characters.", false);
   message.addField(
-    "setAffixes",
+    "setaffixes",
     "Sets the channel for affixes updates (region)",
     false
   );
   message.addField(
-    "unSetAffixes",
+    "unsetaffixes",
     "Unsets the channel that is used for affixes updates. (region)",
     false
   );

@@ -4,6 +4,8 @@ import { help } from "./commands/help";
 import { addCharacter } from "./commands/add";
 import { argsChecker } from "./middleware/argsChecker";
 import { deleteCharacter } from "./commands/delete";
+import { show } from "./commands/show";
+import { setAffix } from "./commands/setAffixes";
 
 require("dotenv").config();
 const client = new Discord.Client();
@@ -30,9 +32,20 @@ client.on("message", async (message: any) => {
   let check = undefined;
   switch (command) {
     case "commands":
-      message.channel.send(help());
+      await message.channel.send(help());
       break;
     case "setaffixes":
+      check = argsChecker(1, args.length);
+      if (check === undefined) {
+        console.log(check);
+        const result = await setAffix(
+          guildID,
+          channelID,
+          args[0].toLowerCase()
+        );
+        console.log(result);
+        message.channel.send(result);
+      } else message.channel.send(check);
       break;
     case "unsetaffixes":
       break;
@@ -41,6 +54,8 @@ client.on("message", async (message: any) => {
     case "unsetcharacterupdates":
       break;
     case "show":
+      const result = await show(guildID);
+      await message.channel.send(result);
       break;
     case "add":
       check = argsChecker(3, args.length);
@@ -76,8 +91,10 @@ client.on("message", async (message: any) => {
       return;
   }
 });
-
 client.login(process.env.discord_bot_key).then(async () => {
-  const connectedGuilds = client.guilds.cache.map((guild: any) => guild.id);
+  const connectedGuilds = client.guilds.cache.map((guild: any) => {
+    guild.id;
+  });
+  // console.log(client.guilds.cache.get("123131"));
   console.log(`Bot connected to: ${connectedGuilds.length} servers`);
 });
