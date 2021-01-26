@@ -7,6 +7,8 @@ import { deleteCharacter } from "./commands/delete";
 import { show } from "./commands/show";
 import { setAffix } from "./commands/setAffixes";
 import { unSetAffix } from "./commands/unSetAffixes";
+import { setCharacterChannel } from "./commands/setCharacterUpdate";
+import { unSetCharacterChannel } from "./commands/unSetCharacterUpdate";
 
 require("dotenv").config();
 const client = new Discord.Client();
@@ -60,8 +62,12 @@ client.on("message", async (message: any) => {
       } else await message.channel.send(check);
       break;
     case "setcharacterupdates":
+      const response = await setCharacterChannel(guildID, channelID);
+      await message.channel.send(response);
       break;
     case "unsetcharacterupdates":
+      const res = await unSetCharacterChannel(guildID, channelID);
+      await message.channel.send(res);
       break;
     case "show":
       const result = await show(guildID);

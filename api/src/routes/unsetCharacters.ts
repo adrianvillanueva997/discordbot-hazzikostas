@@ -6,7 +6,7 @@ import { characterChannel } from "../models/CharacterChannel";
 const router = express.Router();
 
 router.delete(
-  "/api/characters/unset",
+  "/api/characters/unsetcharacterchannel",
   body("serverID").isNumeric(),
   body("channelID").isNumeric(),
   async (req: Request, res: Response) => {
@@ -14,17 +14,19 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.send({ errors: errors.array() }).status(400);
     }
-    const { guildID, channelID } = req.body;
+    const { serverID, channelID } = req.body;
     const exists = await characterChannel.findOne({
-      serverID: guildID,
+      serverID: serverID,
       channelID: channelID,
     });
     if (exists == null) {
-      return res.send({ message: "Server does not exist" }).status(404);
+      return res
+        .send({ message: "Server does not have any channel assigned" })
+        .status(404);
     }
     await characterChannel.findOneAndRemove(
       {
-        serverID: guildID,
+        serverID: serverID,
         channelID: channelID,
       },
       { useFindAndModify: false }

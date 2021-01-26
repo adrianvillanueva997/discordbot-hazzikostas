@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 interface setAttrs {
-  serverID: number;
-  channelID: number;
+  serverID: string;
+  channelID: string;
 }
 
 interface setModel extends mongoose.Model<setDoc> {
@@ -10,14 +10,14 @@ interface setModel extends mongoose.Model<setDoc> {
 }
 
 interface setDoc extends mongoose.Document {
-  serverID: number;
-  channelID: number;
+  serverID: string;
+  channelID: string;
 }
 
 const setSchema = new mongoose.Schema(
   {
-    serverID: { type: Number, required: true },
-    channelID: { type: Number, required: true },
+    serverID: { type: String, required: true },
+    channelID: { type: String, required: true },
   },
   {
     toJSON: {

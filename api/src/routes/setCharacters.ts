@@ -6,28 +6,28 @@ import { characterChannel } from "../models/CharacterChannel";
 const router = express.Router();
 
 router.post(
-  "/api/characters/set",
-  body("serverID").isNumeric(),
-  body("channelID").isNumeric(),
+  "/api/characters/setcharacterchannel",
+  body("serverID").isString(),
+  body("channelID").isString(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.send({ errors: errors.array() }).status(400);
     }
-    const { guildID, channelID } = req.body;
+    const { serverID, channelID } = req.body;
     const setChannel = characterChannel.build({
-      serverID: guildID,
+      serverID: serverID,
       channelID: channelID,
     });
     const exists = await characterChannel.findOne({
-      guildID: guildID,
+      serverID: serverID,
       channelID: channelID,
     });
     if (exists === null) {
       await setChannel.save();
       return res.send({ message: "Channel assigned successfully" }).status(200);
     }
-    return res.send({ message: "Server does not exist" }).status(400);
+    return res.send({ message: "Server already registered" }).status(400);
   }
 );
 
