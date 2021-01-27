@@ -13,6 +13,7 @@ import { unSetAffixes } from "./routes/unsetAffix";
 import { affixes } from "./routes/getAffixes";
 import { AffixesJob } from "./routines/affixesRoutine";
 import { CharacterJob } from "./routines/characterRoutine";
+import { updateStatus } from "./routes/updateStatus";
 
 require("dotenv").config();
 const app = express();
@@ -27,6 +28,7 @@ app.use(set);
 app.use(setAffixes);
 app.use(unSetAffixes);
 app.use(affixes);
+app.use(updateStatus);
 
 const start = async () => {
   try {
@@ -46,7 +48,6 @@ const start = async () => {
     console.log("API listening on port 3000");
     AffixesJob.start();
     CharacterJob.start();
-    // await raider.getCharacterData("us", "wyrmrest-accord", "Uwupolicia");
   });
 };
 start().then();
