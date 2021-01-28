@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const setAffix = async (
-  guildID: string,
+  serverID: string,
   channelID: string,
   region: string
 ): Promise<string> => {
   return await axios
     .post(`http://${process.env.discord_bot_api_url}/api/characters/setAffix`, {
-      guildID: guildID,
+      serverID: serverID,
       channelID: channelID,
       region: region,
     })

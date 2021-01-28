@@ -9,6 +9,7 @@ import { setAffix } from "./commands/setAffixes";
 import { unSetAffix } from "./commands/unSetAffixes";
 import { setCharacterChannel } from "./commands/setCharacterUpdate";
 import { unSetCharacterChannel } from "./commands/unSetCharacterUpdate";
+import { affixesJob } from "./routines/affixes";
 
 require("dotenv").config();
 const client = new Discord.Client();
@@ -40,13 +41,11 @@ client.on("message", async (message: any) => {
     case "setaffixes":
       check = argsChecker(1, args.length);
       if (check === undefined) {
-        console.log(check);
         const result = await setAffix(
           guildID,
           channelID,
           args[0].toLowerCase()
         );
-        console.log(result);
         await message.channel.send(result);
       } else await message.channel.send(check);
       break;
@@ -113,4 +112,7 @@ client.login(process.env.discord_bot_key).then(async () => {
   });
   // console.log(client.guilds.cache.get("123131"));
   console.log(`Bot connected to: ${connectedGuilds.length} servers`);
+  affixesJob.start();
 });
+
+export { client as DiscordClient };

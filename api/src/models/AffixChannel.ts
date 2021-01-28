@@ -11,15 +11,15 @@ interface setAffixModel extends mongoose.Model<setAffixDoc> {
 }
 
 interface setAffixDoc extends mongoose.Document {
-  serverID: number;
-  channelID: number;
+  serverID: string;
+  channelID: string;
   region: string[];
 }
 
 const setSchema = new mongoose.Schema(
   {
-    serverID: { type: Number, required: true },
-    channelID: { type: Number, required: true },
+    serverID: { type: String, required: true },
+    channelID: { type: String, required: true },
     region: { type: Array, required: true },
   },
   {

@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   "/api/characters/setAffix",
-  body("guildID").isString(),
+  body("serverID").isString(),
   body("channelID").isString(),
   body("region").isString(),
   async (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.send({ errors: errors.array() }).status(400);
     }
-    let { guildID, channelID, region } = req.body;
+    let { serverID, channelID, region } = req.body;
     region = region.toLowerCase();
     if (!regions.includes(region)) {
       return res
@@ -28,9 +28,9 @@ router.post(
     const affix = affixChannel.build({
       channelID: channelID,
       region: region,
-      serverID: guildID,
+      serverID: serverID,
     });
-    const exists = await affixChannel.findOne({ serverID: guildID });
+    const exists = await affixChannel.findOne({ serverID: serverID });
     if (exists == null) {
       await affix.save();
       return res

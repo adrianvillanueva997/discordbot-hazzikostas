@@ -14,6 +14,7 @@ import { affixes } from "./routes/getAffixes";
 import { AffixesJob } from "./routines/affixesRoutine";
 import { CharacterJob } from "./routines/characterRoutine";
 import { updateStatus } from "./routes/updateStatus";
+import { regions_r } from "./routes/regions";
 
 require("dotenv").config();
 const app = express();
@@ -29,6 +30,7 @@ app.use(setAffixes);
 app.use(unSetAffixes);
 app.use(affixes);
 app.use(updateStatus);
+app.use(regions_r);
 
 const start = async () => {
   try {
