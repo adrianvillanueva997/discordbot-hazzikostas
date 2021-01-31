@@ -38,7 +38,6 @@ router.post(
       return res.send({ message: "Character already registered" }).status(400);
     }
     characterExists.serverID.push(serverID);
-    console.log(characterExists.serverID);
     await Character.findByIdAndUpdate(
       { _id: characterExists.id },
       { serverID: characterExists.serverID },

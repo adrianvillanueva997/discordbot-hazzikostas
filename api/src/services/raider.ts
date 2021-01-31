@@ -34,8 +34,6 @@ class Raider {
       .then((r) => {
         return r.data;
       });
-    const test = data.mythic_plus_scores_by_season[0].scores.tank;
-    console.log(test);
     // @ts-ignore
     return {
       toonName: data.name,

@@ -37,8 +37,6 @@ router.delete(
     const newServerIDArr = data.serverID.filter(function (value: string) {
       return value != serverID;
     });
-    console.log(data.serverID);
-    console.log(newServerIDArr);
     await Character.findByIdAndUpdate(
       { _id: data._id },
       { serverID: newServerIDArr },

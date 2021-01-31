@@ -3,7 +3,6 @@ import { Raider } from "../services/raider";
 import { affixes } from "../models/Affixes";
 
 const job = new CronJob("55 18 * * 2", async () => {
-  console.log("Starting affixes routine");
   const regions = ["us", "eu", "tw", "kr", "cn"];
   for (let i = 0; i < regions.length; i++) {
     const region = regions[i];
