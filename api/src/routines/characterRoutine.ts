@@ -22,6 +22,7 @@ const job = new CronJob("* * * * *", async () => {
       const {
         race,
         spec,
+        _class,
         role,
         faction,
         thumbnailUrl,
@@ -42,6 +43,7 @@ const job = new CronJob("* * * * *", async () => {
         await Character.findByIdAndUpdate(
           { _id: _id },
           {
+            _class: _class,
             race: race,
             spec: spec,
             role: role,
@@ -49,7 +51,18 @@ const job = new CronJob("* * * * *", async () => {
             thumbnailUrl: thumbnailUrl,
             profileUrl: profileUrl,
             all: all,
+            allDif: 0,
             dps: dps,
+            dpsDif: 0,
+            healerDif: 0,
+            tankDif: 0,
+            spec0Dif: 0,
+            spec1Dif: 0,
+            spec2Dif: 0,
+            rankFactionDif: 0,
+            rankOverallDif: 0,
+            rankClassDif: 0,
+            spec3Dif: 0,
             healer: healer,
             tank: tank,
             spec0: spec0,
@@ -81,6 +94,7 @@ const job = new CronJob("* * * * *", async () => {
             { _id: characters[i]._id },
             {
               all: all,
+              _class: _class,
               allDif: all - characters[i].all,
               rankClass: rankClass,
               rankClassDif: rankClass - characters[i].rankClass,

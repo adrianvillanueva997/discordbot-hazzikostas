@@ -16,9 +16,9 @@ export interface CharacterDoc extends mongoose.Document {
   realm: string;
   region: string;
   serverID: string[];
+  _class: string;
   spec: string;
   race: string;
-  class: string;
   role: string;
   faction: string;
   thumbnailUrl: string;
@@ -71,15 +71,15 @@ const characterSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    _class: {
+      type: String,
+      required: false,
+    },
     role: {
       type: String,
       required: false,
     },
     race: {
-      type: String,
-      required: false,
-    },
-    class: {
       type: String,
       required: false,
     },
@@ -104,6 +104,10 @@ const characterSchema = new mongoose.Schema(
       required: false,
     },
     tank: {
+      type: Number,
+      required: false,
+    },
+    tankDif: {
       type: Number,
       required: false,
     },
@@ -148,6 +152,10 @@ const characterSchema = new mongoose.Schema(
       required: false,
     },
     spec0Dif: {
+      type: Number,
+      required: false,
+    },
+    spec1Dif: {
       type: Number,
       required: false,
     },

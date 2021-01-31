@@ -10,6 +10,7 @@ import { unSetAffix } from "./commands/unSetAffixes";
 import { setCharacterChannel } from "./commands/setCharacterUpdate";
 import { unSetCharacterChannel } from "./commands/unSetCharacterUpdate";
 import { affixesJob } from "./routines/affixes";
+import { characterJob } from "./routines/characters";
 
 require("dotenv").config();
 const client = new Discord.Client();
@@ -101,6 +102,7 @@ client.on("message", async (message: any) => {
       }
       break;
     case "stats":
+      await message.channel.send("Command not yet available!");
       break;
     default:
       return;
@@ -110,9 +112,9 @@ client.login(process.env.discord_bot_key).then(async () => {
   const connectedGuilds = client.guilds.cache.map((guild: any) => {
     guild.id;
   });
-  // console.log(client.guilds.cache.get("123131"));
   console.log(`Bot connected to: ${connectedGuilds.length} servers`);
   affixesJob.start();
+  characterJob.start();
 });
 
 export { client as DiscordClient };

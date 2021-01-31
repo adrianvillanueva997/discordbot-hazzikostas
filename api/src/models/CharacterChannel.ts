@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-interface setAttrs {
+interface characterChannelAttrs {
   serverID: string;
   channelID: string;
 }
 
 interface setModel extends mongoose.Model<setDoc> {
-  build(attrs: setAttrs): setDoc;
+  build(attrs: characterChannelAttrs): setDoc;
 }
 
 interface setDoc extends mongoose.Document {
@@ -26,7 +26,7 @@ const setSchema = new mongoose.Schema(
   }
 );
 
-setSchema.statics.build = (attrs: setAttrs) => {
+setSchema.statics.build = (attrs: characterChannelAttrs) => {
   return new characterChannel(attrs);
 };
 const characterChannel = mongoose.model<setDoc, setModel>(
@@ -34,4 +34,4 @@ const characterChannel = mongoose.model<setDoc, setModel>(
   setSchema
 );
 
-export { characterChannel };
+export { characterChannel, characterChannelAttrs };

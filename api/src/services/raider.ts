@@ -34,9 +34,13 @@ class Raider {
       .then((r) => {
         return r.data;
       });
+    const test = data.mythic_plus_scores_by_season[0].scores.tank;
+    console.log(test);
+    // @ts-ignore
     return {
       toonName: data.name,
       race: data.race,
+      _class: data.class,
       spec: data.active_spec_name,
       role: data.active_spec_role,
       faction: data.faction,
@@ -47,7 +51,7 @@ class Raider {
       all: data.mythic_plus_scores_by_season[0].scores.all,
       dps: data.mythic_plus_scores_by_season[0].scores.dps,
       healer: data.mythic_plus_scores_by_season[0].scores.healer,
-      tank: data.mythic_plus_scores_by_season[0].scores.tank,
+      tank: data.mythic_plus_scores_by_season[0].scores.tank ? undefined : 0,
       spec0: data.mythic_plus_scores_by_season[0].scores.spec_0,
       spec1: data.mythic_plus_scores_by_season[0].scores.spec_1,
       spec2: data.mythic_plus_scores_by_season[0].scores.spec_2,
