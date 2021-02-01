@@ -24,6 +24,7 @@ router.post(
       { postStatus: 0 },
       { useFindAndModify: false }
     );
+    return res.sendStatus(200);
   }
 );
 
