@@ -122,14 +122,16 @@ const characterJob = new CronJob("* * * * *", async () => {
         // @ts-ignore
         // For some reason Typescript can't find the send property
         channelData.send(message);
-        await axios.post(
-          `${process.env.discord_bot_api_url}/api/characters/updateStatus`,
-          { toonName: toonName, region: region, realm: realm }
-        );
       } catch (err) {
         console.log(err);
       }
     }
+    try {
+      await axios.post(
+        `${process.env.discord_bot_api_url}/api/characters/updateStatus`,
+        { toonName: toonName, region: region, realm: realm }
+      );
+    } catch (err) {}
   }
 });
 
