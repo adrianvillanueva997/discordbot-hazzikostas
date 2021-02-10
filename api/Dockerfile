@@ -6,6 +6,7 @@ FROM node:15.8.0-alpine as base
 FROM base as builder
 WORKDIR /build
 COPY package.json .
+COPY package-lock.json .
 RUN npm install
 COPY . .
 RUN npm run build
