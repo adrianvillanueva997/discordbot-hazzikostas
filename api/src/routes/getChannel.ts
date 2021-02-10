@@ -1,9 +1,6 @@
 import { Request, Response, Router } from "express";
 import { body, validationResult } from "express-validator";
-import {
-  characterChannel,
-  characterChannelAttrs,
-} from "../models/CharacterChannel";
+import { characterChannel } from "../models/CharacterChannel";
 import sanitize from "mongo-sanitize";
 
 const router = Router();
@@ -19,7 +16,7 @@ router.get(
     let { serverID } = req.body;
     serverID = sanitize(serverID);
     const serverIDClean = sanitize(serverID);
-    const channel: characterChannelAttrs = await characterChannel.findOne({
+    const channel = await characterChannel.findOne({
       serverID: serverIDClean,
     });
     if (channel == null || channel == undefined) {

@@ -23,12 +23,15 @@ router.post(
       region: region,
       toonName: toonName,
     });
-    await Character.findByIdAndUpdate(
-      exists._id,
-      { postStatus: 0 },
-      { useFindAndModify: false }
-    );
-    return res.send({}).status(200);
+    if (exists != null) {
+      await Character.findByIdAndUpdate(
+        exists._id,
+        { postStatus: 0 },
+        { useFindAndModify: false }
+      );
+      return res.send({}).status(200);
+    }
+    return res.send({}).status(404);
   }
 );
 

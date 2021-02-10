@@ -44,8 +44,8 @@ router.delete(
       return res.send({ message: "Channel unset successfully" }).status(200);
     }
     if (exists.region.includes(region)) {
-      const newRegionArr = exists.region.filter(function (value: number) {
-        return value != region;
+      const newRegionArr = exists.region.filter((regionFiltered) => {
+        return regionFiltered != region;
       });
       await affixChannel.findByIdAndUpdate(
         { _id: exists._id },
