@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { affixChannel } from "../models/AffixChannel";
 import { regions } from "../models/Regions";
+import sanitize from "mongo-sanitize";
 
 const router = express.Router();
 
@@ -16,6 +17,9 @@ router.delete(
       return res.send({ errors: errors.array() }).status(400);
     }
     let { guildID, channelID, region } = req.body;
+    guildID = sanitize(guildID);
+    channelID = sanitize(channelID);
+    region = sanitize(region);
     if (!regions.includes(region)) {
       return res
         .send({

@@ -113,8 +113,8 @@ client.login(process.env.discord_bot_key).then(async () => {
     guild.id;
   });
   console.log(`Bot connected to: ${connectedGuilds.length} servers`);
-  affixesJob.start();
-  characterJob.start();
+  await affixesJob.start();
+  await characterJob.start();
 });
 
 export { client as DiscordClient };

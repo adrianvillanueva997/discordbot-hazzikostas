@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { Character } from "../models/Character";
+import sanitize from "mongo-sanitize";
 
 const router = express.Router();
 
@@ -12,7 +13,8 @@ router.get(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { guildID } = req.body;
+    let { guildID } = req.body;
+    guildID = sanitize(guildID);
     const found = await Character.find({ serverID: guildID });
     if (found.length == 0) {
       res.send({ message: "No characters registered yet" }).status(404);

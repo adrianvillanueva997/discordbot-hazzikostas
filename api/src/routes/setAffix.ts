@@ -3,6 +3,7 @@ import { body, validationResult } from "express-validator";
 
 import { affixChannel } from "../models/AffixChannel";
 import { regions } from "../models/Regions";
+import sanitize from "mongo-sanitize";
 
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.post(
       return res.send({ errors: errors.array() }).status(400);
     }
     let { serverID, channelID, region } = req.body;
+    serverID = sanitize(serverID);
+    channelID = sanitize(channelID);
+    region = sanitize(region);
     region = region.toLowerCase();
     if (!regions.includes(region)) {
       return res

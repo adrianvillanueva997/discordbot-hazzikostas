@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
 import { characterChannel } from "../models/CharacterChannel";
+import sanitize from "mongo-sanitize";
 
 const router = express.Router();
 
@@ -14,7 +15,9 @@ router.post(
     if (!errors.isEmpty()) {
       return res.send({ errors: errors.array() }).status(400);
     }
-    const { serverID, channelID } = req.body;
+    let { serverID, channelID } = req.body;
+    serverID = sanitize(serverID);
+    channelID = sanitize(channelID);
     const setChannel = characterChannel.build({
       serverID: serverID,
       channelID: channelID,

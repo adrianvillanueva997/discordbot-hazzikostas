@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-
 import { Character } from "../models/Character";
+import sanitize from "mongo-sanitize";
 
 const router = express.Router();
 
@@ -17,7 +17,11 @@ router.post(
       console.error(errors.array());
       return res.send({ errors: errors.array() }).status(400);
     }
-    const { toonName, realm, region, serverID } = req.body;
+    let { toonName, realm, region, serverID } = req.body;
+    toonName = sanitize(toonName);
+    realm = sanitize(realm);
+    region = sanitize(serverID);
+    region = sanitize(region);
     const character = Character.build({
       toonName: toonName,
       realm: realm,

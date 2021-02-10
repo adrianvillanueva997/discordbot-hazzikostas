@@ -10,7 +10,7 @@ function sleep(milliseconds: number) {
   } while (currentDate - date < milliseconds);
 }
 
-const job = new CronJob("* * * * *", async () => {
+const job = new CronJob("50 6,12,18,0 * * *", async () => {
   const characters: CharacterDoc[] = await Character.find({});
   for (let i = 0; i < characters.length; i++) {
     if (i % 300) {
