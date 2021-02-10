@@ -16,7 +16,7 @@ jobs:
         language: [ 'javascript' ]
         # Learn more...
     container:
-      image: golang
+      image: node
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
