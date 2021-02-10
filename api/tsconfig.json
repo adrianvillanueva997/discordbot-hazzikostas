@@ -81,4 +81,6 @@
     ]
   },
   "exclude": [
-    ".,
+    "../node_modules"
+  ]
+}
