@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { Character } from "../models/Character";
+import sanitize = require("mongo-sanitize");
 
 const router = express.Router();
 router.post(
@@ -13,8 +14,10 @@ router.post(
     if (!errors.isEmpty()) {
       return res.send({ errors: errors.array() }).status(400);
     }
-    const { toonName, realm, region } = req.body;
-    console.log(toonName, realm, region);
+    let { toonName, realm, region } = req.body;
+    toonName = sanitize(toonName);
+    realm = sanitize(realm);
+    region = sanitize(region);
     const exists = await Character.findOne({
       realm: realm,
       region: region,
