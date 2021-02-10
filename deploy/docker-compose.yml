@@ -1,16 +1,44 @@
-version: '3'
+version: "3"
 services:
   mongo:
+    restart: unless-stopped
     image: mongo
-    container_name: mongo-hazzikostas
+    container_name: hazzikostas_mongo
     ports:
-      - 27017:27017
+      - 27017
     volumes:
       - ./mongo:/data/db
-  mongo-express:
-    image: mongo-express
-    restart: always
+    networks:
+      - hazzikostas
+  api:
+    restart: unless-stopped
+    image: adrianvillanueva997/discordbot_hazzikostas_api
+    container_name: hazzikostas_api
+    depends_on:
+      - mongo
+    networks:
+      - hazzikostas
     ports:
-      - 8081:8081
+      - 3000
+    labels:
+      - "com.centurylinklans.watchtower.enable=true"
+    env_file:
+      - .env
+  bot:
+    restart: unless-stopped
+    image: adrianvillanueva997/discordbot_hazzikostas_bot
+    container_name: hazzikostas_bot
+    networks:
+      - hazzikostas
+    labels:
+      - "com.centurylinklans.watchtower.enable=true"
+    depends_on:
+      - api
+      - mongo
+    env_file:
+      - .env
 volumes:
   mongo:
+networks:
+  hazzikostas:
+    external: true
