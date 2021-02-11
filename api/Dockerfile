@@ -1,7 +1,7 @@
 # Multistage docker image building
 # build-env -> dist
 
-FROM node:14.15.4-alpine as base
+FROM node:15.8.0-alpine as base
 # Building container
 FROM base as builder
 WORKDIR /build
